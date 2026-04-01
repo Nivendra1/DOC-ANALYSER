@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DocDrop — Read less. Know more.</title>
+<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800;900&family=Geist+Mono:wght@400;500&family=Geist:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#070a06;--s1:#0d120c;--s2:#131a11;--border:#1e2a1c;--g:#4ade80;--gd:#22c55e;--glow:rgba(74,222,128,0.1);--pink:#f472b6;--blue:#60a5fa;--amber:#fbbf24;--txt:#e8f5e2;--dim:#5a7055}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--txt);font-family:'Geist',sans-serif;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 40% at 10% 20%,rgba(74,222,128,0.07) 0%,transparent 70%),radial-gradient(ellipse 40% 60% at 90% 80%,rgba(34,197,94,0.05) 0%,transparent 70%);pointer-events:none;z-index:0}
+body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.06) 2px,rgba(0,0,0,0.06) 4px);pointer-events:none;z-index:0;opacity:0.5}
+header{position:sticky;top:0;z-index:100;padding:16px 32px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);background:rgba(7,10,6,0.88);backdrop-filter:blur(20px)}
+.logo{font-family:'Cabinet Grotesk',sans-serif;font-weight:900;font-size:22px;letter-spacing:-1px;color:var(--g)}
+.logo em{color:var(--txt);font-style:normal}
+.nav-pill{font-family:'Geist Mono',monospace;font-size:11px;padding:5px 12px;border-radius:99px;border:1px solid var(--border);color:var(--dim);letter-spacing:0.5px;animation:pb 3s ease-in-out infinite}
+@keyframes pb{0%,100%{border-color:var(--border)}50%{border-color:rgba(74,222,128,0.35)}}
+main{position:relative;z-index:10;max-width:860px;margin:0 auto;padding:72px 20px 100px}
+.hero{margin-bottom:64px;animation:rise 0.7s cubic-bezier(0.16,1,0.3,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.live-tag{display:inline-flex;align-items:center;gap:8px;font-family:'Geist Mono',monospace;font-size:11px;color:var(--g);letter-spacing:1px;margin-bottom:24px}
+.ldot{width:6px;height:6px;border-radius:50%;background:var(--g);animation:blink 1.5s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.2}}
+.hero h1{font-family:'Cabinet Grotesk',sans-serif;font-size:clamp(44px,7.5vw,82px);font-weight:900;line-height:0.93;letter-spacing:-3px;margin-bottom:26px}
+.hero h1 .g{color:var(--g);display:block;position:relative}
+.hero h1 .g::after{content:'';position:absolute;bottom:-4px;left:0;width:60%;height:3px;background:linear-gradient(90deg,var(--g),transparent);border-radius:2px}
+.hero-sub{font-size:17px;color:var(--dim);font-weight:300;max-width:420px;line-height:1.65;margin-bottom:30px}
+.hero-sub strong{color:var(--txt);font-weight:500}
+.fmt-row{display:flex;gap:8px;flex-wrap:wrap}
+.fmt{font-family:'Geist Mono',monospace;font-size:11px;padding:5px 12px;border-radius:6px;border:1px solid;font-weight:500;letter-spacing:0.5px}
+.fmt.pdf{color:#f87171;border-color:rgba(248,113,113,0.25);background:rgba(248,113,113,0.06)}
+.fmt.docx{color:var(--blue);border-color:rgba(96,165,250,0.25);background:rgba(96,165,250,0.06)}
+.fmt.img{color:var(--amber);border-color:rgba(251,191,36,0.25);background:rgba(251,191,36,0.06)}
+.card{background:var(--s1);border:1px solid var(--border);border-radius:20px;padding:32px;margin-bottom:20px;animation:rise 0.7s cubic-bezier(0.16,1,0.3,1) 0.12s both;transition:border-color 0.3s}
+.card:hover{border-color:rgba(74,222,128,0.18)}
+.dz{border:1.5px dashed var(--border);border-radius:14px;padding:48px 20px;text-align:center;cursor:pointer;transition:all 0.25s}
+.dz:hover,.dz.over{border-color:var(--g);background:var(--glow)}
+.dz-ico{width:52px;height:52px;margin:0 auto 14px;border-radius:12px;background:rgba(74,222,128,0.08);border:1px solid rgba(74,222,128,0.15);display:flex;align-items:center;justify-content:center;font-size:22px;transition:transform 0.3s}
+.dz:hover .dz-ico{transform:translateY(-4px) scale(1.08)}
+.dz-title{font-family:'Cabinet Grotesk',sans-serif;font-size:20px;font-weight:800;margin-bottom:6px;letter-spacing:-0.5px}
+.dz-sub{font-size:14px;color:var(--dim)}
+#fi{display:none}
+.sf{display:none;margin-top:16px;padding:14px 16px;background:var(--s2);border-radius:10px;border:1px solid rgba(74,222,128,0.15);align-items:center;gap:12px}
+.sf.show{display:flex}
+.sf-ico{font-size:20px}
+.sf-info{flex:1}
+.sf-name{font-size:14px;font-weight:500}
+.sf-size{font-size:12px;color:var(--dim);font-family:'Geist Mono',monospace}
+.sf-rm{background:none;border:none;color:var(--dim);cursor:pointer;font-size:16px;padding:4px;transition:color 0.2s}
+.sf-rm:hover{color:#f87171}
+.lbl{display:block;font-family:'Geist Mono',monospace;font-size:10px;color:var(--dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;margin-top:16px}
+.inp{width:100%;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;color:var(--txt);font-family:'Geist Mono',monospace;font-size:13px;outline:none;transition:border-color 0.2s}
+.inp:focus{border-color:var(--g)}
+.inp::placeholder{color:var(--dim)}
+.cta{width:100%;margin-top:20px;padding:18px;border:none;border-radius:12px;background:var(--g);color:#070a06;font-family:'Cabinet Grotesk',sans-serif;font-size:18px;font-weight:900;letter-spacing:-0.5px;cursor:pointer;transition:all 0.25s;position:relative;overflow:hidden}
+.cta::before{content:'';position:absolute;inset:0;background:var(--gd);opacity:0;transition:opacity 0.25s}
+.cta:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(74,222,128,0.28)}
+.cta:hover::before{opacity:1}
+.cta:active{transform:translateY(0)}
+.cta:disabled{opacity:0.3;cursor:not-allowed;transform:none;box-shadow:none}
+.cta-in{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;gap:10px}
+.spin{width:18px;height:18px;border:2.5px solid rgba(0,0,0,0.2);border-top-color:#070a06;border-radius:50%;animation:spin 0.7s linear infinite;display:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+.err{display:none;margin-top:14px;padding:14px 16px;background:rgba(248,113,113,0.06);border:1px solid rgba(248,113,113,0.2);border-radius:10px;color:#f87171;font-size:14px;gap:8px;align-items:flex-start}
+.err.show{display:flex}
+.results{display:none;animation:rise 0.5s cubic-bezier(0.16,1,0.3,1) both}
+.results.show{display:block}
+.res-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.res-ttl{font-family:'Cabinet Grotesk',sans-serif;font-size:26px;font-weight:900;letter-spacing:-1px}
+.ok-pill{display:flex;align-items:center;gap:6px;padding:6px 14px;border-radius:99px;font-size:11px;font-weight:500;font-family:'Geist Mono',monospace;background:rgba(74,222,128,0.08);color:var(--g);border:1px solid rgba(74,222,128,0.2)}
+.ok-dot{width:5px;height:5px;border-radius:50%;background:var(--g);animation:blink 1.5s ease-in-out infinite}
+.rc{background:var(--s1);border:1px solid var(--border);border-radius:16px;padding:22px;transition:border-color 0.3s;margin-bottom:14px}
+.rc:hover{border-color:rgba(74,222,128,0.18)}
+.rc-lbl{font-family:'Geist Mono',monospace;font-size:10px;color:var(--dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.rc-lbl::before{content:'';width:3px;height:3px;border-radius:50%;background:var(--g)}
+.rc-val{font-size:15px;line-height:1.65;color:var(--txt)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.s-wrap{display:flex;align-items:center;gap:14px}
+.s-emo{font-size:36px;line-height:1}
+.s-lbl{font-family:'Cabinet Grotesk',sans-serif;font-size:26px;font-weight:900;letter-spacing:-1px}
+.s-lbl.positive{color:var(--g)}.s-lbl.negative{color:#f87171}.s-lbl.neutral{color:var(--dim)}
+.eg{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:14px}
+.et{font-family:'Geist Mono',monospace;font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px}
+.etags{display:flex;flex-wrap:wrap;gap:4px}
+.etag{font-size:12px;padding:3px 8px;border-radius:6px;background:var(--s2);border:1px solid var(--border);color:var(--txt)}
+.etag.n{border-color:rgba(74,222,128,0.3);color:var(--g)}
+.etag.o{border-color:rgba(96,165,250,0.3);color:var(--blue)}
+.etag.d{border-color:rgba(251,191,36,0.3);color:var(--amber)}
+.etag.m{border-color:rgba(244,114,182,0.3);color:var(--pink)}
+.etag-mt{font-size:12px;color:var(--dim);font-style:italic}
+.ir{display:flex;justify-content:space-between;font-size:13px;padding:6px 0;border-bottom:1px solid var(--border)}
+.ir:last-child{border:none}
+.ik{color:var(--dim)}
+.iv{font-family:'Geist Mono',monospace;font-size:12px;color:var(--g)}
+footer{position:relative;z-index:10;text-align:center;padding:24px;color:var(--dim);font-size:13px;border-top:1px solid var(--border)}
+footer b{color:var(--g);font-weight:600}
+@media(max-width:600px){header{padding:14px 16px}main{padding:40px 14px 80px}.two{grid-template-columns:1fr}.card{padding:20px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">Doc<em>Drop</em></div>
+  <div class="nav-pill">GUVI HACKATHON 2026</div>
+</header>
+<main>
+  <div class="hero">
+    <div class="live-tag"><span class="ldot"></span>LIVE · AI-POWERED · GROQ + LLAMA 3.3</div>
+    <h1>Read less.<br><span class="g">Know more.</span></h1>
+    <p class="hero-sub">Drop any doc — we pull out the <strong>summary</strong>, <strong>entities</strong> &amp; <strong>vibes</strong> in seconds. No cap. 🚀</p>
+    <div class="fmt-row">
+      <span class="fmt pdf">PDF</span>
+      <span class="fmt docx">DOCX</span>
+      <span class="fmt img">JPG</span>
+      <span class="fmt img">PNG</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="dz" id="dz">
+      <input type="file" id="fi" accept=".pdf,.docx,.jpg,.jpeg,.png,.bmp,.tiff">
+      <div class="dz-ico">📂</div>
+      <div class="dz-title">Drop it like it's hot 🔥</div>
+      <div class="dz-sub">or click to pick a file</div>
+    </div>
+    <div class="sf" id="sf">
+      <div class="sf-ico" id="sfIco">📄</div>
+      <div class="sf-info">
+        <div class="sf-name" id="sfName">—</div>
+        <div class="sf-size" id="sfSize">—</div>
+      </div>
+      <button class="sf-rm" id="sfRm">✕</button>
+    </div>
+    <label class="lbl" for="ak">API Key</label>
+    <input class="inp" type="text" id="ak" placeholder="niv-doc-analyzer-2026" value="niv-doc-analyzer-2026">
+    <button class="cta" id="cta" disabled>
+      <div class="cta-in">
+        <div class="spin" id="spin"></div>
+        <span id="ctaTxt">Pick a file first 👆</span>
+      </div>
+    </button>
+    <div class="err" id="err"><span>⚠️</span><span id="errTxt"></span></div>
+  </div>
+
+  <div class="results" id="results">
+    <div class="res-hdr">
+      <div class="res-ttl">Here's the tea ☕</div>
+      <div class="ok-pill"><span class="ok-dot"></span>Done</div>
+    </div>
+    <div class="rc">
+      <div class="rc-lbl">TL;DR — Summary</div>
+      <div class="rc-val" id="rSum">—</div>
+    </div>
+    <div class="two">
+      <div class="rc">
+        <div class="rc-lbl">Vibes Check</div>
+        <div class="s-wrap">
+          <div class="s-emo" id="rEmo">😐</div>
+          <div class="s-lbl" id="rSent">Neutral</div>
+        </div>
+      </div>
+      <div class="rc">
+        <div class="rc-lbl">Doc Info</div>
+        <div id="rInfo"></div>
+      </div>
+    </div>
+    <div class="rc">
+      <div class="rc-lbl">Extracted Entities</div>
+      <div class="eg" id="rEnt"></div>
+    </div>
+  </div>
+</main>
+<footer>Built for <b>GUVI Hackathon 2026</b> · by Nivendra</footer>
+
+<script>
+const API='https://doc-analyser-c98e.onrender.com/api/document-analyze';
+const dz=document.getElementById('dz'),fi=document.getElementById('fi'),sf=document.getElementById('sf');
+const cta=document.getElementById('cta'),ctaTxt=document.getElementById('ctaTxt'),spin=document.getElementById('spin');
+const results=document.getElementById('results'),err=document.getElementById('err');
+let file=null;
+dz.addEventListener('click',()=>fi.click());
+dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('over')});
+dz.addEventListener('dragleave',()=>dz.classList.remove('over'));
+dz.addEventListener('drop',e=>{e.preventDefault();dz.classList.remove('over');if(e.dataTransfer.files[0])setFile(e.dataTransfer.files[0])});
+fi.addEventListener('change',e=>{if(e.target.files[0])setFile(e.target.files[0])});
+document.getElementById('sfRm').addEventListener('click',e=>{e.stopPropagation();reset()});
+function setFile(f){file=f;document.getElementById('sfIco').textContent=ico(f.name);document.getElementById('sfName').textContent=f.name;document.getElementById('sfSize').textContent=sz(f.size);sf.classList.add('show');cta.disabled=false;ctaTxt.textContent='Analyse this doc ✨';results.classList.remove('show');err.classList.remove('show')}
+function reset(){file=null;fi.value='';sf.classList.remove('show');cta.disabled=true;ctaTxt.textContent='Pick a file first 👆';results.classList.remove('show');err.classList.remove('show')}
+function ico(n){const e=n.split('.').pop().toLowerCase();if(e==='pdf')return'📕';if(e==='docx'||e==='doc')return'📘';return'🖼️'}
+function typ(n){const e=n.split('.').pop().toLowerCase();if(e==='pdf')return'pdf';if(e==='docx')return'docx';return'image'}
+function sz(b){if(b<1024)return b+'B';if(b<1048576)return(b/1024).toFixed(1)+'KB';return(b/1048576).toFixed(1)+'MB'}
+cta.addEventListener('click',async()=>{
+  if(!file)return;
+  const key=document.getElementById('ak').value.trim();
+  if(!key){showErr('API key is required!');return}
+  cta.disabled=true;spin.style.display='block';ctaTxt.textContent='Cooking... 🍳';
+  results.classList.remove('show');err.classList.remove('show');
+  try{
+    const b64=await toB64(file);
+    const res=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json','x-api-key':key},body:JSON.stringify({fileName:file.name,fileType:typ(file.name),fileBase64:b64})});
+    const data=await res.json();
+    if(!res.ok||data.status==='error')throw new Error(data.detail||'Analysis failed');
+    showRes(data);
+  }catch(e){showErr(e.message||'Something went wrong!')}
+  finally{cta.disabled=false;spin.style.display='none';ctaTxt.textContent='Analyse this doc ✨'}
+});
+function toB64(f){return new Promise((r,j)=>{const rd=new FileReader();rd.onload=()=>r(rd.result.split(',')[1]);rd.onerror=j;rd.readAsDataURL(f)})}
+function showRes(d){
+  document.getElementById('rSum').textContent=d.summary||'—';
+  const s=(d.sentiment||'Neutral').toLowerCase();
+  const em={positive:'🤩',negative:'😬',neutral:'😐'};
+  document.getElementById('rEmo').textContent=em[s]||'😐';
+  const sl=document.getElementById('rSent');sl.textContent=d.sentiment||'Neutral';sl.className='s-lbl '+s;
+  document.getElementById('rInfo').innerHTML=`<div class="ir"><span class="ik">File</span><span class="iv">${d.fileName||'—'}</span></div><div class="ir"><span class="ik">Status</span><span class="iv">${d.status||'—'}</span></div>`;
+  const ents=d.entities||{};
+  const defs=[{k:'names',lbl:'People',cls:'n'},{k:'organizations',lbl:'Orgs',cls:'o'},{k:'dates',lbl:'Dates',cls:'d'},{k:'amounts',lbl:'Money',cls:'m'},{k:'locations',lbl:'Places',cls:''}];
+  const g=document.getElementById('rEnt');g.innerHTML='';
+  defs.forEach(({k,lbl,cls})=>{const items=ents[k]||[];const div=document.createElement('div');div.innerHTML=`<div class="et">${lbl}</div><div class="etags">${items.length?items.map(i=>`<span class="etag ${cls}">${i}</span>`).join(''):'<span class="etag-mt">none</span>'}</div>`;g.appendChild(div)});
+  results.classList.add('show');results.scrollIntoView({behavior:'smooth',block:'start'});
+}
+function showErr(msg){document.getElementById('errTxt').textContent=msg;err.classList.add('show')}
+</script>
+</body>
+</html>
