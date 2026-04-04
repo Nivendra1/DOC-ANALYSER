@@ -6,217 +6,275 @@
 <title>DocDrop — Read less. Know more.</title>
 <link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800;900&family=Geist+Mono:wght@400;500&family=Geist:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#070a06;--s1:#0d120c;--s2:#131a11;--border:#1e2a1c;--g:#4ade80;--gd:#22c55e;--glow:rgba(74,222,128,0.1);--pink:#f472b6;--blue:#60a5fa;--amber:#fbbf24;--txt:#e8f5e2;--dim:#5a7055}
+:root{--bg:#070a06;--s1:#0d120c;--s2:#131a11;--border:#1e2a1c;--g:#4ade80;--gd:#22c55e;--glow:rgba(74,222,128,0.07);--pink:#f472b6;--blue:#60a5fa;--amber:#fbbf24;--red:#f87171;--txt:#e8f5e2;--dim:#5a7055}
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--txt);font-family:'Geist',sans-serif;min-height:100vh;overflow-x:hidden}
-body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 40% at 10% 20%,rgba(74,222,128,0.07) 0%,transparent 70%),radial-gradient(ellipse 40% 60% at 90% 80%,rgba(34,197,94,0.05) 0%,transparent 70%);pointer-events:none;z-index:0}
-body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.06) 2px,rgba(0,0,0,0.06) 4px);pointer-events:none;z-index:0;opacity:0.5}
-header{position:sticky;top:0;z-index:100;padding:16px 32px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);background:rgba(7,10,6,0.88);backdrop-filter:blur(20px)}
-.logo{font-family:'Cabinet Grotesk',sans-serif;font-weight:900;font-size:22px;letter-spacing:-1px;color:var(--g)}
+html,body{height:100%;overflow:hidden}
+body{background:var(--bg);color:var(--txt);font-family:'Geist',sans-serif;display:flex;flex-direction:column}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 50% 70% at 0% 50%,rgba(74,222,128,0.05) 0%,transparent 60%);pointer-events:none;z-index:0}
+body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.04) 2px,rgba(0,0,0,0.04) 4px);pointer-events:none;z-index:0}
+header{position:relative;z-index:100;padding:13px 28px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);background:rgba(7,10,6,0.95);flex-shrink:0}
+.logo{font-family:'Cabinet Grotesk',sans-serif;font-weight:900;font-size:19px;letter-spacing:-1px;color:var(--g)}
 .logo em{color:var(--txt);font-style:normal}
-.nav-pill{font-family:'Geist Mono',monospace;font-size:11px;padding:5px 12px;border-radius:99px;border:1px solid var(--border);color:var(--dim);letter-spacing:0.5px;animation:pb 3s ease-in-out infinite}
-@keyframes pb{0%,100%{border-color:var(--border)}50%{border-color:rgba(74,222,128,0.35)}}
-main{position:relative;z-index:10;max-width:860px;margin:0 auto;padding:72px 20px 100px}
-.hero{margin-bottom:64px;animation:rise 0.7s cubic-bezier(0.16,1,0.3,1) both}
-@keyframes rise{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
-.live-tag{display:inline-flex;align-items:center;gap:8px;font-family:'Geist Mono',monospace;font-size:11px;color:var(--g);letter-spacing:1px;margin-bottom:24px}
-.ldot{width:6px;height:6px;border-radius:50%;background:var(--g);animation:blink 1.5s ease-in-out infinite}
+.hright{display:flex;align-items:center;gap:10px}
+.ldot{width:5px;height:5px;border-radius:50%;background:var(--g);animation:blink 1.5s ease-in-out infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0.2}}
-.hero h1{font-family:'Cabinet Grotesk',sans-serif;font-size:clamp(44px,7.5vw,82px);font-weight:900;line-height:0.93;letter-spacing:-3px;margin-bottom:26px}
-.hero h1 .g{color:var(--g);display:block;position:relative}
-.hero h1 .g::after{content:'';position:absolute;bottom:-4px;left:0;width:60%;height:3px;background:linear-gradient(90deg,var(--g),transparent);border-radius:2px}
-.hero-sub{font-size:17px;color:var(--dim);font-weight:300;max-width:420px;line-height:1.65;margin-bottom:30px}
+.live{display:flex;align-items:center;gap:5px;font-family:'Geist Mono',monospace;font-size:10px;color:var(--g);letter-spacing:0.8px}
+.npill{font-family:'Geist Mono',monospace;font-size:10px;padding:4px 10px;border-radius:99px;border:1px solid var(--border);color:var(--dim)}
+.layout{display:flex;flex:1;overflow:hidden;position:relative;z-index:10}
+/* LEFT */
+.left{width:320px;flex-shrink:0;border-right:1px solid var(--border);display:flex;flex-direction:column;padding:28px 24px;overflow-y:auto;background:rgba(13,18,12,0.5)}
+.left::-webkit-scrollbar{width:2px}
+.left::-webkit-scrollbar-thumb{background:var(--border)}
+.tl-live{display:flex;align-items:center;gap:6px;font-family:'Geist Mono',monospace;font-size:10px;color:var(--g);letter-spacing:0.8px;margin-bottom:14px}
+.hero-h{font-family:'Cabinet Grotesk',sans-serif;font-size:clamp(30px,3vw,44px);font-weight:900;line-height:0.92;letter-spacing:-2px;margin-bottom:14px}
+.hero-h .g{color:var(--g);display:block}
+.hero-sub{font-size:13px;color:var(--dim);line-height:1.65;margin-bottom:18px}
 .hero-sub strong{color:var(--txt);font-weight:500}
-.fmt-row{display:flex;gap:8px;flex-wrap:wrap}
-.fmt{font-family:'Geist Mono',monospace;font-size:11px;padding:5px 12px;border-radius:6px;border:1px solid;font-weight:500;letter-spacing:0.5px}
+.fmts{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:24px}
+.fmt{font-family:'Geist Mono',monospace;font-size:10px;padding:3px 8px;border-radius:5px;border:1px solid;font-weight:500}
 .fmt.pdf{color:#f87171;border-color:rgba(248,113,113,0.25);background:rgba(248,113,113,0.06)}
 .fmt.docx{color:var(--blue);border-color:rgba(96,165,250,0.25);background:rgba(96,165,250,0.06)}
 .fmt.img{color:var(--amber);border-color:rgba(251,191,36,0.25);background:rgba(251,191,36,0.06)}
-.card{background:var(--s1);border:1px solid var(--border);border-radius:20px;padding:32px;margin-bottom:20px;animation:rise 0.7s cubic-bezier(0.16,1,0.3,1) 0.12s both;transition:border-color 0.3s}
-.card:hover{border-color:rgba(74,222,128,0.18)}
-.dz{border:1.5px dashed var(--border);border-radius:14px;padding:48px 20px;text-align:center;cursor:pointer;transition:all 0.25s}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:24px}
+.stat{background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:12px;transition:border-color 0.3s}
+.stat:hover{border-color:rgba(74,222,128,0.2)}
+.sn{font-family:'Cabinet Grotesk',sans-serif;font-size:22px;font-weight:900;color:var(--g);letter-spacing:-1px}
+.sl{font-size:11px;color:var(--dim);margin-top:1px}
+.how{margin-top:auto;padding-top:20px;border-top:1px solid var(--border)}
+.how-t{font-family:'Geist Mono',monospace;font-size:10px;color:var(--dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}
+.step{display:flex;align-items:flex-start;gap:8px;margin-bottom:8px}
+.snum{width:18px;height:18px;border-radius:50%;background:rgba(74,222,128,0.08);border:1px solid rgba(74,222,128,0.2);display:flex;align-items:center;justify-content:center;font-family:'Geist Mono',monospace;font-size:9px;color:var(--g);flex-shrink:0;margin-top:1px}
+.stxt{font-size:12px;color:var(--dim);line-height:1.5}
+.stxt strong{color:var(--txt);font-weight:500}
+/* RIGHT */
+.right{flex:1;overflow-y:auto;padding:24px 24px 40px;display:flex;flex-direction:column;gap:14px}
+.right::-webkit-scrollbar{width:2px}
+.right::-webkit-scrollbar-thumb{background:var(--border)}
+.ucard{background:var(--s1);border:1px solid var(--border);border-radius:16px;padding:22px;flex-shrink:0;transition:border-color 0.3s}
+.ucard:hover{border-color:rgba(74,222,128,0.15)}
+.dz{border:1.5px dashed var(--border);border-radius:10px;padding:28px 20px;text-align:center;cursor:pointer;transition:all 0.2s}
 .dz:hover,.dz.over{border-color:var(--g);background:var(--glow)}
-.dz-ico{width:52px;height:52px;margin:0 auto 14px;border-radius:12px;background:rgba(74,222,128,0.08);border:1px solid rgba(74,222,128,0.15);display:flex;align-items:center;justify-content:center;font-size:22px;transition:transform 0.3s}
-.dz:hover .dz-ico{transform:translateY(-4px) scale(1.08)}
-.dz-title{font-family:'Cabinet Grotesk',sans-serif;font-size:20px;font-weight:800;margin-bottom:6px;letter-spacing:-0.5px}
-.dz-sub{font-size:14px;color:var(--dim)}
+.dz-ico{width:40px;height:40px;margin:0 auto 10px;border-radius:9px;background:rgba(74,222,128,0.07);border:1px solid rgba(74,222,128,0.15);display:flex;align-items:center;justify-content:center;font-size:18px;transition:transform 0.25s}
+.dz:hover .dz-ico{transform:translateY(-3px) scale(1.06)}
+.dz-t{font-family:'Cabinet Grotesk',sans-serif;font-size:16px;font-weight:800;margin-bottom:3px;letter-spacing:-0.3px}
+.dz-s{font-size:12px;color:var(--dim)}
 #fi{display:none}
-.sf{display:none;margin-top:16px;padding:14px 16px;background:var(--s2);border-radius:10px;border:1px solid rgba(74,222,128,0.15);align-items:center;gap:12px}
+.sf{display:none;margin-top:12px;padding:10px 13px;background:var(--s2);border-radius:8px;border:1px solid rgba(74,222,128,0.15);align-items:center;gap:10px}
 .sf.show{display:flex}
-.sf-ico{font-size:20px}
+.sf-ico{font-size:16px}
 .sf-info{flex:1}
-.sf-name{font-size:14px;font-weight:500}
-.sf-size{font-size:12px;color:var(--dim);font-family:'Geist Mono',monospace}
-.sf-rm{background:none;border:none;color:var(--dim);cursor:pointer;font-size:16px;padding:4px;transition:color 0.2s}
-.sf-rm:hover{color:#f87171}
-.lbl{display:block;font-family:'Geist Mono',monospace;font-size:10px;color:var(--dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;margin-top:16px}
-.inp{width:100%;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;color:var(--txt);font-family:'Geist Mono',monospace;font-size:13px;outline:none;transition:border-color 0.2s}
+.sf-n{font-size:13px;font-weight:500}
+.sf-s{font-size:11px;color:var(--dim);font-family:'Geist Mono',monospace}
+.sf-rm{background:none;border:none;color:var(--dim);cursor:pointer;font-size:14px;padding:3px;transition:color 0.2s}
+.sf-rm:hover{color:var(--red)}
+.inp-row{display:flex;gap:8px;margin-top:12px;align-items:flex-end}
+.iw{flex:1}
+.lbl{display:block;font-family:'Geist Mono',monospace;font-size:10px;color:var(--dim);letter-spacing:0.8px;text-transform:uppercase;margin-bottom:4px}
+.inp{width:100%;background:var(--s2);border:1px solid var(--border);border-radius:7px;padding:9px 11px;color:var(--txt);font-family:'Geist Mono',monospace;font-size:12px;outline:none;transition:border-color 0.2s}
 .inp:focus{border-color:var(--g)}
 .inp::placeholder{color:var(--dim)}
-.cta{width:100%;margin-top:20px;padding:18px;border:none;border-radius:12px;background:var(--g);color:#070a06;font-family:'Cabinet Grotesk',sans-serif;font-size:18px;font-weight:900;letter-spacing:-0.5px;cursor:pointer;transition:all 0.25s;position:relative;overflow:hidden}
-.cta::before{content:'';position:absolute;inset:0;background:var(--gd);opacity:0;transition:opacity 0.25s}
-.cta:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(74,222,128,0.28)}
-.cta:hover::before{opacity:1}
-.cta:active{transform:translateY(0)}
+.cta{padding:9px 18px;border:none;border-radius:7px;background:var(--g);color:#070a06;font-family:'Cabinet Grotesk',sans-serif;font-size:14px;font-weight:900;letter-spacing:-0.3px;cursor:pointer;transition:all 0.2s;white-space:nowrap}
+.cta:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(74,222,128,0.22)}
 .cta:disabled{opacity:0.3;cursor:not-allowed;transform:none;box-shadow:none}
-.cta-in{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;gap:10px}
-.spin{width:18px;height:18px;border:2.5px solid rgba(0,0,0,0.2);border-top-color:#070a06;border-radius:50%;animation:spin 0.7s linear infinite;display:none}
+.cta-in{display:flex;align-items:center;gap:6px}
+.spin{width:13px;height:13px;border:2px solid rgba(0,0,0,0.2);border-top-color:#070a06;border-radius:50%;animation:spin 0.7s linear infinite;display:none}
 @keyframes spin{to{transform:rotate(360deg)}}
-.err{display:none;margin-top:14px;padding:14px 16px;background:rgba(248,113,113,0.06);border:1px solid rgba(248,113,113,0.2);border-radius:10px;color:#f87171;font-size:14px;gap:8px;align-items:flex-start}
+.err{display:none;margin-top:10px;padding:10px 13px;background:rgba(248,113,113,0.06);border:1px solid rgba(248,113,113,0.2);border-radius:7px;color:var(--red);font-size:12px;gap:6px;align-items:flex-start}
 .err.show{display:flex}
-.results{display:none;animation:rise 0.5s cubic-bezier(0.16,1,0.3,1) both}
-.results.show{display:block}
-.res-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
-.res-ttl{font-family:'Cabinet Grotesk',sans-serif;font-size:26px;font-weight:900;letter-spacing:-1px}
-.ok-pill{display:flex;align-items:center;gap:6px;padding:6px 14px;border-radius:99px;font-size:11px;font-weight:500;font-family:'Geist Mono',monospace;background:rgba(74,222,128,0.08);color:var(--g);border:1px solid rgba(74,222,128,0.2)}
-.ok-dot{width:5px;height:5px;border-radius:50%;background:var(--g);animation:blink 1.5s ease-in-out infinite}
-.rc{background:var(--s1);border:1px solid var(--border);border-radius:16px;padding:22px;transition:border-color 0.3s;margin-bottom:14px}
-.rc:hover{border-color:rgba(74,222,128,0.18)}
-.rc-lbl{font-family:'Geist Mono',monospace;font-size:10px;color:var(--dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:6px}
-.rc-lbl::before{content:'';width:3px;height:3px;border-radius:50%;background:var(--g)}
-.rc-val{font-size:15px;line-height:1.65;color:var(--txt)}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
-.s-wrap{display:flex;align-items:center;gap:14px}
-.s-emo{font-size:36px;line-height:1}
-.s-lbl{font-family:'Cabinet Grotesk',sans-serif;font-size:26px;font-weight:900;letter-spacing:-1px}
-.s-lbl.positive{color:var(--g)}.s-lbl.negative{color:#f87171}.s-lbl.neutral{color:var(--dim)}
-.eg{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:14px}
-.et{font-family:'Geist Mono',monospace;font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px}
-.etags{display:flex;flex-wrap:wrap;gap:4px}
-.etag{font-size:12px;padding:3px 8px;border-radius:6px;background:var(--s2);border:1px solid var(--border);color:var(--txt)}
+/* RESULTS */
+.res{display:none;flex-direction:column;gap:12px;animation:rise 0.4s cubic-bezier(0.16,1,0.3,1) both}
+.res.show{display:flex}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.res-hdr{display:flex;align-items:center;justify-content:space-between}
+.res-t{font-family:'Cabinet Grotesk',sans-serif;font-size:18px;font-weight:900;letter-spacing:-0.5px}
+.res-r{display:flex;align-items:center;gap:7px}
+.dbadge{font-family:'Geist Mono',monospace;font-size:10px;padding:3px 9px;border-radius:5px;border:1px solid rgba(96,165,250,0.3);background:rgba(96,165,250,0.07);color:var(--blue);letter-spacing:0.5px}
+.okpill{display:flex;align-items:center;gap:5px;padding:4px 10px;border-radius:99px;font-size:10px;font-family:'Geist Mono',monospace;background:rgba(74,222,128,0.07);color:var(--g);border:1px solid rgba(74,222,128,0.2)}
+.okdot{width:4px;height:4px;border-radius:50%;background:var(--g);animation:blink 1.5s ease-in-out infinite}
+.rc{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:16px;transition:border-color 0.3s}
+.rc:hover{border-color:rgba(74,222,128,0.13)}
+.rl{font-family:'Geist Mono',monospace;font-size:10px;color:var(--dim);letter-spacing:0.8px;text-transform:uppercase;margin-bottom:7px;display:flex;align-items:center;gap:4px}
+.rl::before{content:'';width:3px;height:3px;border-radius:50%;background:var(--g)}
+.rv{font-size:13px;line-height:1.65;color:var(--txt)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sw{display:flex;align-items:center;gap:10px}
+.se{font-size:26px;line-height:1}
+.ss{font-family:'Cabinet Grotesk',sans-serif;font-size:20px;font-weight:900;letter-spacing:-0.5px}
+.ss.positive{color:var(--g)}.ss.negative{color:var(--red)}.ss.neutral{color:var(--dim)}
+.ir{display:flex;justify-content:space-between;font-size:12px;padding:4px 0;border-bottom:1px solid var(--border)}
+.ir:last-child{border:none}
+.ik{color:var(--dim)}.iv{font-family:'Geist Mono',monospace;font-size:11px;color:var(--g)}
+.eg{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
+.et{font-family:'Geist Mono',monospace;font-size:9px;color:var(--dim);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px}
+.etags{display:flex;flex-wrap:wrap;gap:3px}
+.etag{font-size:11px;padding:2px 7px;border-radius:4px;background:var(--s2);border:1px solid var(--border);color:var(--txt);transition:transform 0.15s;cursor:default}
+.etag:hover{transform:scale(1.05)}
 .etag.n{border-color:rgba(74,222,128,0.3);color:var(--g)}
 .etag.o{border-color:rgba(96,165,250,0.3);color:var(--blue)}
 .etag.d{border-color:rgba(251,191,36,0.3);color:var(--amber)}
 .etag.m{border-color:rgba(244,114,182,0.3);color:var(--pink)}
-.etag-mt{font-size:12px;color:var(--dim);font-style:italic}
-.ir{display:flex;justify-content:space-between;font-size:13px;padding:6px 0;border-bottom:1px solid var(--border)}
-.ir:last-child{border:none}
-.ik{color:var(--dim)}
-.iv{font-family:'Geist Mono',monospace;font-size:12px;color:var(--g)}
-footer{position:relative;z-index:10;text-align:center;padding:24px;color:var(--dim);font-size:13px;border-top:1px solid var(--border)}
-footer b{color:var(--g);font-weight:600}
-@media(max-width:600px){header{padding:14px 16px}main{padding:40px 14px 80px}.two{grid-template-columns:1fr}.card{padding:20px}}
+.etag-mt{font-size:11px;color:var(--dim);font-style:italic}
+/* TIMELINE */
+.tl{display:flex;flex-direction:column}
+.tli{display:flex;gap:12px;position:relative}
+.tli:not(:last-child)::before{content:'';position:absolute;left:6px;top:16px;bottom:-8px;width:1px;background:var(--border)}
+.tld{width:13px;height:13px;border-radius:50%;background:rgba(74,222,128,0.12);border:1.5px solid var(--g);flex-shrink:0;margin-top:2px}
+.tlc{padding-bottom:14px;flex:1}
+.tldate{font-family:'Geist Mono',monospace;font-size:10px;color:var(--g);margin-bottom:2px}
+.tldesc{font-size:11px;color:var(--dim);line-height:1.4}
+/* NBA */
+.nba{display:flex;flex-wrap:wrap;gap:7px}
+.nbab{display:flex;align-items:center;gap:5px;padding:7px 12px;border-radius:7px;border:1px solid var(--border);background:var(--s2);color:var(--txt);font-size:12px;cursor:pointer;text-decoration:none;transition:all 0.2s;font-family:'Geist',sans-serif}
+.nbab:hover{border-color:rgba(74,222,128,0.3);background:var(--glow);color:var(--g)}
+.nbai{font-size:13px}
+footer{position:relative;z-index:10;text-align:center;padding:8px;color:var(--dim);font-size:10px;border-top:1px solid var(--border);flex-shrink:0;font-family:'Geist Mono',monospace;letter-spacing:0.3px}
+footer b{color:var(--g)}
+@media(max-width:768px){html,body{overflow:auto}.layout{flex-direction:column}.left{width:100%;border-right:none;border-bottom:1px solid var(--border)}.two{grid-template-columns:1fr}.stats{grid-template-columns:repeat(4,1fr)}}
 </style>
 </head>
 <body>
 <header>
   <div class="logo">Doc<em>Drop</em></div>
-  <div class="nav-pill">GUVI HACKATHON 2026</div>
+  <div class="hright">
+    <div class="live"><span class="ldot"></span>LIVE</div>
+    <div class="npill">GUVI HACKATHON 2026</div>
+  </div>
 </header>
-<main>
-  <div class="hero">
-    <div class="live-tag"><span class="ldot"></span>LIVE · AI-POWERED · GROQ + LLAMA 3.3</div>
-    <h1>Read less.<br><span class="g">Know more.</span></h1>
+<div class="layout">
+  <div class="left">
+    <div class="tl-live"><span class="ldot"></span>AI-POWERED · GROQ + LLAMA 3.3</div>
+    <h1 class="hero-h">Read less.<br><span class="g">Know more.</span></h1>
     <p class="hero-sub">Drop any doc — we pull out the <strong>summary</strong>, <strong>entities</strong> &amp; <strong>vibes</strong> in seconds. No cap. 🚀</p>
-    <div class="fmt-row">
+    <div class="fmts">
       <span class="fmt pdf">PDF</span>
       <span class="fmt docx">DOCX</span>
       <span class="fmt img">JPG</span>
       <span class="fmt img">PNG</span>
     </div>
+    <div class="stats">
+      <div class="stat"><div class="sn" id="sW">—</div><div class="sl">Words</div></div>
+      <div class="stat"><div class="sn" id="sR">—</div><div class="sl">Min Read</div></div>
+      <div class="stat"><div class="sn" id="sE">—</div><div class="sl">Entities</div></div>
+      <div class="stat"><div class="sn" id="sD">—</div><div class="sl">Dates</div></div>
+    </div>
+    <div class="how">
+      <div class="how-t">How it works</div>
+      <div class="step"><div class="snum">1</div><div class="stxt"><strong>Upload</strong> your PDF, DOCX or image</div></div>
+      <div class="step"><div class="snum">2</div><div class="stxt"><strong>AI extracts</strong> text via OCR or native parsing</div></div>
+      <div class="step"><div class="snum">3</div><div class="stxt"><strong>Llama 3.3</strong> analyses and returns insights</div></div>
+      <div class="step"><div class="snum">4</div><div class="stxt"><strong>Explore</strong> entities, timeline &amp; smart actions</div></div>
+    </div>
   </div>
 
-  <div class="card">
-    <div class="dz" id="dz">
-      <input type="file" id="fi" accept=".pdf,.docx,.jpg,.jpeg,.png,.bmp,.tiff">
-      <div class="dz-ico">📂</div>
-      <div class="dz-title">Drop it like it's hot 🔥</div>
-      <div class="dz-sub">or click to pick a file</div>
-    </div>
-    <div class="sf" id="sf">
-      <div class="sf-ico" id="sfIco">📄</div>
-      <div class="sf-info">
-        <div class="sf-name" id="sfName">—</div>
-        <div class="sf-size" id="sfSize">—</div>
+  <div class="right">
+    <div class="ucard">
+      <div class="dz" id="dz">
+        <input type="file" id="fi" accept=".pdf,.docx,.jpg,.jpeg,.png,.bmp,.tiff">
+        <div class="dz-ico">📂</div>
+        <div class="dz-t">Drop it like it's hot 🔥</div>
+        <div class="dz-s">or click to pick a file</div>
       </div>
-      <button class="sf-rm" id="sfRm">✕</button>
-    </div>
-    <label class="lbl" for="ak">API Key</label>
-    <input class="inp" type="text" id="ak" placeholder="niv-doc-analyzer-2026" value="niv-doc-analyzer-2026">
-    <button class="cta" id="cta" disabled>
-      <div class="cta-in">
-        <div class="spin" id="spin"></div>
-        <span id="ctaTxt">Pick a file first 👆</span>
+      <div class="sf" id="sf">
+        <div class="sf-ico" id="sfIco">📄</div>
+        <div class="sf-info"><div class="sf-n" id="sfN">—</div><div class="sf-s" id="sfS">—</div></div>
+        <button class="sf-rm" id="sfRm">✕</button>
       </div>
-    </button>
-    <div class="err" id="err"><span>⚠️</span><span id="errTxt"></span></div>
-  </div>
+      <div class="inp-row">
+        <div class="iw">
+          <label class="lbl" for="ak">API Key</label>
+          <input class="inp" type="text" id="ak" placeholder="niv-doc-analyzer-2026" value="niv-doc-analyzer-2026">
+        </div>
+        <button class="cta" id="cta" disabled>
+          <div class="cta-in"><div class="spin" id="spin"></div><span id="ctaTxt">Analyse ✨</span></div>
+        </button>
+      </div>
+      <div class="err" id="err"><span>⚠️</span><span id="errTxt"></span></div>
+    </div>
 
-  <div class="results" id="results">
-    <div class="res-hdr">
-      <div class="res-ttl">Here's the tea ☕</div>
-      <div class="ok-pill"><span class="ok-dot"></span>Done</div>
-    </div>
-    <div class="rc">
-      <div class="rc-lbl">TL;DR — Summary</div>
-      <div class="rc-val" id="rSum">—</div>
-    </div>
-    <div class="two">
-      <div class="rc">
-        <div class="rc-lbl">Vibes Check</div>
-        <div class="s-wrap">
-          <div class="s-emo" id="rEmo">😐</div>
-          <div class="s-lbl" id="rSent">Neutral</div>
+    <div class="res" id="res">
+      <div class="res-hdr">
+        <div class="res-t">Here's the tea ☕</div>
+        <div class="res-r">
+          <div class="dbadge" id="dbadge">DOCUMENT</div>
+          <div class="okpill"><span class="okdot"></span>Done</div>
         </div>
       </div>
-      <div class="rc">
-        <div class="rc-lbl">Doc Info</div>
-        <div id="rInfo"></div>
+      <div class="rc"><div class="rl">TL;DR — Summary</div><div class="rv" id="rSum">—</div></div>
+      <div class="two">
+        <div class="rc"><div class="rl">Vibes Check</div><div class="sw"><div class="se" id="rEmo">😐</div><div class="ss" id="rSent">Neutral</div></div></div>
+        <div class="rc"><div class="rl">Doc Info</div><div id="rInfo"></div></div>
       </div>
-    </div>
-    <div class="rc">
-      <div class="rc-lbl">Extracted Entities</div>
-      <div class="eg" id="rEnt"></div>
+      <div class="rc"><div class="rl">Extracted Entities</div><div class="eg" id="rEnt"></div></div>
+      <div class="rc" id="tlCard" style="display:none"><div class="rl">Timeline</div><div class="tl" id="rTl"></div></div>
+      <div class="rc" id="nbaCard" style="display:none"><div class="rl">Next Best Actions</div><div class="nba" id="rNba"></div></div>
     </div>
   </div>
-</main>
-<footer>Built for <b>GUVI Hackathon 2026</b> · by Nivendra</footer>
+</div>
+<footer>Built for <b>GUVI Hackathon 2026</b> · DocDrop by Nivendra · Powered by Groq + Llama 3.3 70B</footer>
 
 <script>
 const API='https://doc-analyser-c98e.onrender.com/api/document-analyze';
 const dz=document.getElementById('dz'),fi=document.getElementById('fi'),sf=document.getElementById('sf');
 const cta=document.getElementById('cta'),ctaTxt=document.getElementById('ctaTxt'),spin=document.getElementById('spin');
-const results=document.getElementById('results'),err=document.getElementById('err');
+const res=document.getElementById('res'),err=document.getElementById('err');
 let file=null;
 dz.addEventListener('click',()=>fi.click());
 dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('over')});
 dz.addEventListener('dragleave',()=>dz.classList.remove('over'));
-dz.addEventListener('drop',e=>{e.preventDefault();dz.classList.remove('over');if(e.dataTransfer.files[0])setFile(e.dataTransfer.files[0])});
-fi.addEventListener('change',e=>{if(e.target.files[0])setFile(e.target.files[0])});
+dz.addEventListener('drop',e=>{e.preventDefault();dz.classList.remove('over');if(e.dataTransfer.files[0])setF(e.dataTransfer.files[0])});
+fi.addEventListener('change',e=>{if(e.target.files[0])setF(e.target.files[0])});
 document.getElementById('sfRm').addEventListener('click',e=>{e.stopPropagation();reset()});
-function setFile(f){file=f;document.getElementById('sfIco').textContent=ico(f.name);document.getElementById('sfName').textContent=f.name;document.getElementById('sfSize').textContent=sz(f.size);sf.classList.add('show');cta.disabled=false;ctaTxt.textContent='Analyse this doc ✨';results.classList.remove('show');err.classList.remove('show')}
-function reset(){file=null;fi.value='';sf.classList.remove('show');cta.disabled=true;ctaTxt.textContent='Pick a file first 👆';results.classList.remove('show');err.classList.remove('show')}
-function ico(n){const e=n.split('.').pop().toLowerCase();if(e==='pdf')return'📕';if(e==='docx'||e==='doc')return'📘';return'🖼️'}
+function setF(f){file=f;document.getElementById('sfIco').textContent=ico(f.name);document.getElementById('sfN').textContent=f.name;document.getElementById('sfS').textContent=sz(f.size);sf.classList.add('show');cta.disabled=false;ctaTxt.textContent='Analyse ✨';res.classList.remove('show');err.classList.remove('show')}
+function reset(){file=null;fi.value='';sf.classList.remove('show');cta.disabled=true;ctaTxt.textContent='Analyse ✨';res.classList.remove('show');err.classList.remove('show');['sW','sR','sE','sD'].forEach(id=>document.getElementById(id).textContent='—')}
+function ico(n){const e=n.split('.').pop().toLowerCase();if(e==='pdf')return'📕';if(e==='docx')return'📘';return'🖼️'}
 function typ(n){const e=n.split('.').pop().toLowerCase();if(e==='pdf')return'pdf';if(e==='docx')return'docx';return'image'}
 function sz(b){if(b<1024)return b+'B';if(b<1048576)return(b/1024).toFixed(1)+'KB';return(b/1048576).toFixed(1)+'MB'}
 cta.addEventListener('click',async()=>{
   if(!file)return;
   const key=document.getElementById('ak').value.trim();
   if(!key){showErr('API key is required!');return}
-  cta.disabled=true;spin.style.display='block';ctaTxt.textContent='Cooking... 🍳';
-  results.classList.remove('show');err.classList.remove('show');
+  cta.disabled=true;spin.style.display='block';ctaTxt.textContent='Cooking...';
+  res.classList.remove('show');err.classList.remove('show');
   try{
     const b64=await toB64(file);
-    const res=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json','x-api-key':key},body:JSON.stringify({fileName:file.name,fileType:typ(file.name),fileBase64:b64})});
-    const data=await res.json();
-    if(!res.ok||data.status==='error')throw new Error(data.detail||'Analysis failed');
-    showRes(data);
+    const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json','x-api-key':key},body:JSON.stringify({fileName:file.name,fileType:typ(file.name),fileBase64:b64})});
+    const d=await r.json();
+    if(!r.ok||d.status==='error')throw new Error(d.detail||'Analysis failed');
+    showRes(d);
   }catch(e){showErr(e.message||'Something went wrong!')}
-  finally{cta.disabled=false;spin.style.display='none';ctaTxt.textContent='Analyse this doc ✨'}
+  finally{cta.disabled=false;spin.style.display='none';ctaTxt.textContent='Analyse ✨'}
 });
 function toB64(f){return new Promise((r,j)=>{const rd=new FileReader();rd.onload=()=>r(rd.result.split(',')[1]);rd.onerror=j;rd.readAsDataURL(f)})}
 function showRes(d){
   document.getElementById('rSum').textContent=d.summary||'—';
+  document.getElementById('dbadge').textContent=(d.document_type||'DOCUMENT').toUpperCase();
   const s=(d.sentiment||'Neutral').toLowerCase();
   const em={positive:'🤩',negative:'😬',neutral:'😐'};
   document.getElementById('rEmo').textContent=em[s]||'😐';
-  const sl=document.getElementById('rSent');sl.textContent=d.sentiment||'Neutral';sl.className='s-lbl '+s;
+  const sl=document.getElementById('rSent');sl.textContent=d.sentiment||'Neutral';sl.className='ss '+s;
   document.getElementById('rInfo').innerHTML=`<div class="ir"><span class="ik">File</span><span class="iv">${d.fileName||'—'}</span></div><div class="ir"><span class="ik">Status</span><span class="iv">${d.status||'—'}</span></div>`;
   const ents=d.entities||{};
   const defs=[{k:'names',lbl:'People',cls:'n'},{k:'organizations',lbl:'Orgs',cls:'o'},{k:'dates',lbl:'Dates',cls:'d'},{k:'amounts',lbl:'Money',cls:'m'},{k:'locations',lbl:'Places',cls:''}];
   const g=document.getElementById('rEnt');g.innerHTML='';
-  defs.forEach(({k,lbl,cls})=>{const items=ents[k]||[];const div=document.createElement('div');div.innerHTML=`<div class="et">${lbl}</div><div class="etags">${items.length?items.map(i=>`<span class="etag ${cls}">${i}</span>`).join(''):'<span class="etag-mt">none</span>'}</div>`;g.appendChild(div)});
-  results.classList.add('show');results.scrollIntoView({behavior:'smooth',block:'start'});
+  let total=0;
+  defs.forEach(({k,lbl,cls})=>{const items=ents[k]||[];total+=items.length;const div=document.createElement('div');div.innerHTML=`<div class="et">${lbl}</div><div class="etags">${items.length?items.map(i=>`<span class="etag ${cls}">${i}</span>`).join(''):'<span class="etag-mt">none</span>'}</div>`;g.appendChild(div)});
+  const wc=d.word_count||d.summary?.split(/\s+/).length||0;
+  document.getElementById('sW').textContent=wc>0?wc.toLocaleString():'—';
+  document.getElementById('sR').textContent=d.reading_time_minutes||Math.max(1,Math.round(wc/200));
+  document.getElementById('sE').textContent=total||'—';
+  document.getElementById('sD').textContent=(ents.dates||[]).length||'—';
+  const dates=ents.dates||[];
+  const tlCard=document.getElementById('tlCard'),tlDiv=document.getElementById('rTl');
+  if(dates.length>0){tlDiv.innerHTML='';dates.forEach(dt=>{const item=document.createElement('div');item.className='tli';item.innerHTML=`<div class="tld"></div><div class="tlc"><div class="tldate">${dt}</div><div class="tldesc">Date mentioned in document</div></div>`;tlDiv.appendChild(item)});tlCard.style.display='block'}else{tlCard.style.display='none'}
+  const nbaCard=document.getElementById('nbaCard'),nbaDiv=document.getElementById('rNba');
+  nbaDiv.innerHTML='';
+  const actions=[];
+  if(dates.length>0)actions.push({i:'📅',l:'Add to Calendar',u:`https://calendar.google.com/calendar/render?action=TEMPLATE&text=Event&dates=${encodeURIComponent(dates[0])}`});
+  if((ents.amounts||[]).length>0)actions.push({i:'📊',l:'View Amounts',u:'#'});
+  if((ents.organizations||[]).length>0){const o=ents.organizations[0];actions.push({i:'🔍',l:`Search "${o}"`,u:`https://www.google.com/search?q=${encodeURIComponent(o)}`});actions.push({i:'💼',l:'Find on LinkedIn',u:`https://www.linkedin.com/search/results/companies/?keywords=${encodeURIComponent(o)}`})}
+  if((ents.names||[]).length>0)actions.push({i:'👤',l:`Find ${ents.names[0]}`,u:`https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent(ents.names[0])}`});
+  if(actions.length>0){actions.slice(0,4).forEach(a=>{const btn=document.createElement('a');btn.className='nbab';btn.innerHTML=`<span class="nbai">${a.i}</span>${a.l}`;btn.href=a.u;if(a.u!=='#')btn.target='_blank';nbaDiv.appendChild(btn)});nbaCard.style.display='block'}else{nbaCard.style.display='none'}
+  res.classList.add('show');
 }
 function showErr(msg){document.getElementById('errTxt').textContent=msg;err.classList.add('show')}
 </script>
